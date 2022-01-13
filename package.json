@@ -1,0 +1,28 @@
+{
+  "name": "yapi-plugin-google",
+  "version": "1.0.0",
+  "author": "slarkzhu",
+  "description": "google login for yapi",
+  "main": "index.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1",
+    "start": "node server.js"
+  },
+  "keywords": [
+    "yapi-plugin"
+  ],
+  "license": "ISC",
+  "dependencies": {
+    "google-auth-library": "^7.11.0",
+    "googleapis": "^92.0.0",
+    "react-google-login": "^5.2.2"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/slarkzhu/yapi-plugin-google.git"
+  },
+  "bugs": {
+    "url": "https://github.com/slarkzhu/yapi-plugin-google/issues"
+  },
+  "homepage": "https://github.com/slarkzhu/yapi-plugin-google#readme"
+}
