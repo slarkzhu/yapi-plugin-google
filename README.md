@@ -37,6 +37,6 @@
 启动并测试服务
 
 ``` shell
-npm install
+npm install yapi-plugin-google
 node server/app.js
 ```
