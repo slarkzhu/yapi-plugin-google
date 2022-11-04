@@ -29,7 +29,7 @@
 
 ## step 2
 
-在 [Google Cloud](https://console.cloud.google.com/apis/credentials)中
+在 [Google Cloud](https://console.cloud.google.com/apis/credentials)中增加`redirectUri`到`Authorized redirect URIs`
 
 
 ## step 3
