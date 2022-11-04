@@ -1,36 +1,32 @@
 import React from 'react';
-import { GoogleLogin } from "react-google-login";
 
 module.exports = function (options) {
-  // Success Handler
-  const responseGoogleSuccess = (response) => {
-    let userInfo = {
-      name: response.profileObj.name,
-      email: response.profileObj.email,
-      token: response.tokenId
+  const handleLogin = () => {
+    const { redirectUri, clientId } = options;
+    const rootUrl = 'https://accounts.google.com/o/oauth2/v2/auth'
+    const params = {
+      redirect_uri: redirectUri,
+      client_id: clientId,
+      access_type: 'offline',
+      response_type: 'code',
+      prompt: 'consent',
+      scope: [
+        'https://www.googleapis.com/auth/userinfo.profile',
+        'https://www.googleapis.com/auth/userinfo.email',
+      ].join(' '),
+      state: 'test',
     };
-
-    location.href = '/api/user/login_by_token?token=' + userInfo.token
-  };
-
-  // Error Handler
-  const responseGoogleError = (response) => {
-    console.log(response);
-  };        
+    const qs = new URLSearchParams(params);
+    location.href = `${rootUrl}?${qs.toString()}`;;
+  }
 
   const GoogleLoginComponent = () => (
-    // <button className="btn-home btn-home-normal" >Sign In with Google</button>
-    <GoogleLogin
-      clientId={options.clientId}
-      render={renderProps => (
-        <button className="btn-home btn-home-normal" onClick={renderProps.onClick} disabled={renderProps.disabled}>{options.buttonText}</button>
-      )}
-      // buttonText={options.buttonText}
-      onSuccess={responseGoogleSuccess}
-      onFailure={responseGoogleError}
-      isSignedIn={false}
-      cookiePolicy={"single_host_origin"}
-    />
+    <button
+      className="btn-home btn-home-normal"
+      onClick={handleLogin}
+    >
+      {options.buttonText ? options.buttonText : 'Sign In with Google'}
+    </button>
   )
 
   this.bindHook('third_login', GoogleLoginComponent);
