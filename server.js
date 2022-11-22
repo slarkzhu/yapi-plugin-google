@@ -60,6 +60,7 @@ module.exports = function (options) {
       const userInfo = await getUserInfo(token)
       return userInfo
     } catch(e) {
+      yapi.commons.log(e, "getUserInfo error")
       return {
         status_code: e.statuscode,
         message: e.statusMessage
