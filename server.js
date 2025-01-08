@@ -58,6 +58,13 @@ module.exports = function (options) {
     try {
       const token = await getAccessToken(oauthcode, clientId, secret, redirectUri)
       const userInfo = await getUserInfo(token)
+
+      if (options.allowedDomains) {
+        let domain = userInfo.email.split('@')[1];
+        if (options.allowedDomains.indexOf(domain) === -1) {
+          return yapi.commons.resReturn(null, 400, 'Email domain not allowed to login! Please using email with domain: ' + options.allowedDomains.join(', '));
+        }
+      }
       return userInfo
     } catch(e) {
       yapi.commons.log(e, "getUserInfo error")

@@ -26,6 +26,7 @@
 - `clientId` google credentials clientId
 - `secret` google credentials secret
 - `redirectUri` 回调地址
+- `allowedDomains` (optional) email domain allowed to login, such as: ["domainA.com", "domainB.com"]
 
 ## step 2
 
