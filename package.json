@@ -1,6 +1,6 @@
 {
   "name": "yapi-plugin-google",
-  "version": "1.0.0",
+  "version": "1.0.1",
   "author": "slarkzhu",
   "description": "google login for yapi",
   "main": "index.js",
