@@ -47,31 +47,25 @@ module.exports = function (options) {
     let oauthcode = ctx.request.query.code;
     yapi.commons.log(oauthcode, "google login")
     if (!oauthcode) {
-      return (ctx.body = yapi.commons.resReturn(null, 400, 'code不能为空'));
+      throw new Error('google login: code不能为空');
     }
     let oauthstate = ctx.request.query.state;
     if (!oauthstate) {
-      return (ctx.body = yapi.commons.resReturn(null, 400, 'state不能为空'));
+      throw new Error('google login: state不能为空');
     }
   
     const { clientId, secret, redirectUri } = options
-    try {
-      const token = await getAccessToken(oauthcode, clientId, secret, redirectUri)
-      const userInfo = await getUserInfo(token)
+    const token = await getAccessToken(oauthcode, clientId, secret, redirectUri)
+    const userInfo = await getUserInfo(token)
 
-      if (options.allowedDomains) {
-        let domain = userInfo.email.split('@')[1];
-        if (options.allowedDomains.indexOf(domain) === -1) {
-          return yapi.commons.resReturn(null, 400, 'Email domain not allowed to login! Please using email with domain: ' + options.allowedDomains.join(', '));
-        }
-      }
-      return userInfo
-    } catch(e) {
-      yapi.commons.log(e, "getUserInfo error")
-      return {
-        status_code: e.statuscode,
-        message: e.statusMessage
+    if (options.allowedDomains) {
+      let domain = userInfo.email.split('@')[1];
+      yapi.commons.log('Email: ' + userInfo.email + ', domain: ' + domain, 'info');
+      if (options.allowedDomains.indexOf(domain) === -1) {
+        yapi.commons.log('Email: ' + userInfo.email + ', login failed because domain not allowed', 'error');
+        throw new Error('Email domain not allowed to login! Please using email with domain: ' + options.allowedDomains.join(', '));
       }
     }
+    return userInfo
   });
 };
